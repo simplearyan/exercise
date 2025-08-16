@@ -10,19 +10,63 @@
 <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
 <meta name="theme-color" content="#ffffff">
 
-  <!-- ... other head tags ... -->
+<!-- Basic SEO Meta Tags -->
 <meta name="description" content="{{ with .Description }}{{ . }}{{ else }}{{ with .Summary }}{{ . | plainify | truncate 160 }}{{ else }}{{ .Site.Params.description }}{{ end }}{{ end }}">
 <meta name="keywords" content="{{ with .Params.keywords }}{{ delimit . ", " }}{{ else }}{{ delimit .Site.Params.keywords ", " }}{{ end }}">
 <meta name="author" content="{{ with .Params.author }}{{ . }}{{ else }}{{ .Site.Params.author }}{{ end }}">
 
+<!-- Canonical URL -->
+<link rel="canonical" href="{{ .Permalink }}">
+
+<!-- Robots Meta Tag -->
+<meta name="robots" content="{{ with .Params.robots }}{{ . }}{{ else }}index, follow{{ end }}">
+
+<!-- Open Graph Meta Tags (for social sharing) -->
 <meta property="og:title" content="{{ .Title }} | {{ .Site.Title }}">
 <meta property="og:description" content="{{ with .Description }}{{ . }}{{ else }}{{ with .Summary }}{{ . | plainify | truncate 160 }}{{ else }}{{ .Site.Params.description }}{{ end }}{{ end }}">
-<meta property="og:image" content="{{ with .Params.image }}{{ . }}{{ else }}{{ .Site.Params.image }}{{ end }}">
+<meta property="og:image" content="{{ with .Params.image }}{{ . | absURL }}{{ else }}{{ .Site.Params.image | absURL }}{{ end }}">
+<meta property="og:url" content="{{ .Permalink }}">
+<meta property="og:type" content="{{ if .IsPage }}article{{ else }}website{{ end }}">
+<meta property="og:site_name" content="{{ .Site.Title }}">
 
+<!-- Twitter Card Meta Tags -->
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="{{ .Title }} | {{ .Site.Title }}">
 <meta name="twitter:description" content="{{ with .Description }}{{ . }}{{ else }}{{ with .Summary }}{{ . | plainify | truncate 160 }}{{ else }}{{ .Site.Params.description }}{{ end }}{{ end }}">
-<meta property="twitter:image" content="{{ with .Params.image }}{{ . }}{{ else }}{{ .Site.Params.image }}{{ end }}">
+<meta property="twitter:image" content="{{ with .Params.image }}{{ . | absURL }}{{ else }}{{ .Site.Params.image | absURL }}{{ end }}">
+
+<!-- Structured Data (JSON-LD) -->
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "{{ if .IsPage }}Article{{ else }}WebSite{{ end }}",
+    "headline": "{{ .Title }}",
+    "name": "{{ .Title }}",
+    "description": "{{ with .Description }}{{ . }}{{ else }}{{ with .Summary }}{{ . | plainify | truncate 160 }}{{ else }}{{ .Site.Params.description }}{{ end }}{{ end }}",
+    "image": "{{ with .Params.image }}{{ . | absURL }}{{ else }}{{ .Site.Params.image | absURL }}{{ end }}",
+    "url": "{{ .Permalink }}",
+    {{ if .IsPage }}
+    "datePublished": "{{ .Date.Format "2006-01-02T15:04:05-07:00" }}",
+    "dateModified": "{{ .Lastmod.Format "2006-01-02T15:04:05-07:00" }}",
+    "author": {
+        "@type": "Person",
+        "name": "{{ with .Params.author }}{{ . }}{{ else }}{{ .Site.Params.author }}{{ end }}"
+    },
+    "publisher": {
+        "@type": "Organization",
+        "name": "{{ .Site.Title }}",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "{{ .Site.Params.logo | absURL }}"
+        }
+    },
+    {{ end }}
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "{{ .Permalink }}"
+    }
+}
+</script>
 
   <!-- ... rest of your head ... -->
   {{/*  {{ template "_internal/opengraph.html" . }}  */}}

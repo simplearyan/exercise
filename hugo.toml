@@ -19,7 +19,8 @@ title = "Exercism"
   description = "The best collection of quick, lightweight browser games."
   keywords = ["games", "browser", "casual"]
   author = "Pinnotes"
-  image = "/math.svg"
+  image = "math.svg"
+  logo = "math.svg"
   googleAnalyticsID = "G-XXXXXXXXXX" # Replace with your actual Google Analytics ID
 
 

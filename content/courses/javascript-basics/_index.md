@@ -2,6 +2,7 @@
 title: "JavaScript Basics: From Zero to Hero"
 description: "A comprehensive introduction to the fundamental concepts of JavaScript. Perfect for beginners with no prior programming experience."
 cover_image: "https://images.unsplash.com/photo-1440582096070-fa5961d9d682?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxjb2xsZWN0aW9uLXBhZ2V8MXw4NzcwNzc4Nnx8ZW58MHx8fHx8"
+image: "https://images.unsplash.com/photo-1440582096070-fa5961d9d682?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxjb2xsZWN0aW9uLXBhZ2V8MXw4NzcwNzc4Nnx8ZW58MHx8fHx8"
 ---
 
 Welcome to JavaScript Basics! In this course, you will learn everything you need to get started with one of the most popular programming languages on the planet. We will cover variables, data types, functions, and more.
