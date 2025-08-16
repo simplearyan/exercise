@@ -1,0 +1,154 @@
+/*
+==============================================
+--- Table of Contents (TOC) Styles ---
+==============================================
+*/
+
+/* --- Mobile Dropdown Styles --- */
+
+/* Hide the desktop sidebar on mobile */
+.m-lesson-sidebar-desktop {
+    display: none;
+}
+
+/* The main container for the dropdown */
+.m-lesson-sidebar {
+    margin-bottom: 2rem;
+}
+
+.toc-dropdown-toggle {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 1rem 1.5rem;
+    background-color: var(--card-background);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-dark);
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.toc-dropdown-toggle:hover {
+    background-color: #f8f9fa;
+}
+
+.toc-dropdown-toggle i {
+    transition: transform 0.3s ease;
+}
+
+/* The TOC list itself is hidden by default */
+.m-lesson-toc {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease-in-out;
+    background-color: var(--card-background);
+    border: 1px solid var(--border-color);
+    border-top: none;
+    border-radius: 0 0 var(--border-radius) var(--border-radius);
+    padding: 0 1.5rem;
+}
+
+/* When the dropdown is open, expand the list */
+.toc-dropdown.is-open .m-lesson-toc {
+    padding: 1.5rem;
+}
+
+.m-lesson-toc ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.m-lesson-toc li {
+    margin-bottom: 0.5rem;
+}
+
+.m-lesson-toc a {
+    display: block;
+    text-decoration: none;
+    color: var(--text-light);
+    font-size: 0.9rem;
+    padding: 0.25rem 0;
+    transition: all 0.2s ease-in-out;
+}
+
+.m-lesson-toc a:hover {
+    color: var(--text-dark);
+}
+
+.m-lesson-toc a.active {
+    color: var(--primary-purple);
+    font-weight: 600;
+}
+
+.m-lesson-toc ul ul {
+    padding-left: 1rem;
+    margin-top: 0.5rem;
+}
+
+
+/*
+==============================================
+--- Responsive Grid & Desktop Sidebar ---
+==============================================
+*/
+
+.m-lesson-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+}
+
+@media (min-width: 992px) {
+    .m-lesson-grid {
+        grid-template-columns: 1fr 250px; 
+    }
+
+    /* Hide the mobile dropdown container */
+    .m-lesson-sidebar {
+        display: none;
+    }
+
+    /* Show and style the desktop sidebar */
+    .m-lesson-sidebar-desktop {
+        display: block;
+        position: sticky;
+        top: 100px;
+        align-self: start;
+    }
+
+    .m-lesson-sidebar-desktop .m-lesson-toc {
+        /* Reset styles for sidebar view */
+        max-height: none;
+        background-color: transparent;
+        border: none;
+        border-radius: 0;
+        padding: 0;
+        padding-left: 1.5rem;
+        border-left: 2px solid var(--border-color);
+    }
+
+    .m-lesson-sidebar-desktop .m-lesson-toc h3 {
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: var(--text-light);
+        margin-bottom: 1rem;
+        font-weight: 600;
+    }
+
+    .m-lesson-sidebar-desktop .m-lesson-toc a {
+        border-left: 2px solid transparent;
+        padding-left: 1rem;
+        margin-left: -1.6rem; /* Aligns the active border with the main border */
+    }
+
+    .m-lesson-sidebar-desktop .m-lesson-toc a.active {
+        border-left-color: var(--primary-purple);
+        transform: translateX(4px);
+    }
+}

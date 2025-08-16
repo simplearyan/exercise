@@ -1,0 +1,20 @@
+{{- $.Scratch.Add "index" slice -}}
+{{- range where .Site.Pages "Kind" "in" (slice "section" "page") -}}
+    {{- if and (in .Section "courses") (ne .Title "") -}}
+        {{- $parent_title := "" -}}
+        {{- if and .Parent (eq .Parent.Kind "section") -}}
+            {{- $parent_title = .Parent.Title -}}
+        {{- end -}}
+        {{- $.Scratch.Add "index" (dict 
+            "title" .Title 
+            "permalink" .RelPermalink 
+            "summary" .Summary 
+            "tags" .Params.tags
+            "categories" .Params.categories
+            "language" .Params.language
+            "parent" $parent_title
+            "content" .Plain
+        ) -}}
+    {{- end -}}
+{{- end -}}
+{{- $.Scratch.Get "index" | jsonify -}}

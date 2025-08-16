@@ -1,0 +1,14 @@
+{{ define "main" }}
+<div class="container page">
+    <div class="language-hero">
+        <h1>All {{ .Title }}</h1>
+    </div>
+    <div class="taxonomy-list" style="justify-content: center; gap: 1rem;">
+        {{ range .Data.Terms.ByCount }}
+            <a href="{{ .Page.RelPermalink }}" class="tag-link" style="font-size: 1rem; padding: 0.5rem 1rem;">
+                {{ .Page.Title }} ({{ .Count }})
+            </a>
+        {{ end }}
+    </div>
+</div>
+{{ end }}

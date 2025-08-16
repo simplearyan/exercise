@@ -1,0 +1,40 @@
+{{ define "main" }}
+<div class="container page">
+    <div class="m-lesson-grid">
+        <!-- Main Lesson Content -->
+        <div class="m-lesson-container">
+            <div class="m-lesson-breadcrumb">
+                <a href="{{ .Parent.RelPermalink }}">
+                    <i class="fas fa-arrow-left"></i> Back to {{ .Parent.Title }}
+                </a>
+            </div>
+
+            <!-- TOC for Mobile (will be hidden on desktop) -->
+            <aside class="m-lesson-sidebar">
+                <div class="toc-dropdown">
+                    <button class="toc-dropdown-toggle" aria-expanded="false" aria-controls="toc-list">
+                        <span>On this page</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="m-lesson-toc" id="toc-list">
+                        {{ .TableOfContents }}
+                    </div>
+                </div>
+            </aside>
+
+            <h1>{{ .Title }}</h1>
+            <div class="m-lesson-content">
+                {{ .Content }}
+            </div>
+        </div>
+
+        <!-- TOC Sidebar for Desktop (will be hidden on mobile) -->
+        <aside class="m-lesson-sidebar-desktop">
+             <div class="m-lesson-toc">
+                <h3>On this page</h3>
+                {{ .TableOfContents }}
+            </div>
+        </aside>
+    </div>
+</div>
+{{ end }}

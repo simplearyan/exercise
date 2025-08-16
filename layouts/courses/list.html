@@ -1,0 +1,37 @@
+    {{ define "main" }}
+    <div class="container page">
+        <div class="m-course-header">
+            {{ with .Params.cover_image }}
+            <div class="m-course-cover-image">
+                <img src="{{ . }}" alt="Cover for {{ $.Title }}">
+            </div>
+            {{ end }}
+            <div class="m-course-header-content">
+                <h1>{{ .Title }}</h1>
+                <p>{{ .Params.description }}</p>
+            </div>
+        </div>
+
+        <div class="m-course-body">
+            <div class="m-course-main-content">
+                <h2>About this Course</h2>
+                {{ .Content }}
+            </div>
+            <div class="m-course-lesson-list">
+                <h3>Course Lessons</h3>
+                {{/* List all the pages (lessons) inside this course's folder */}}
+                {{ range .Pages.ByWeight }}
+                <a href="{{ .RelPermalink }}" class="m-lesson-card">
+                    <div class="m-lesson-card-icon">
+                        <i class="fas fa-book-open"></i>
+                    </div>
+                    <div class="m-lesson-card-content">
+                        <h4>{{ .Title }}</h4>
+                    </div>
+                </a>
+                {{ end }}
+            </div>
+        </div>
+    </div>
+    {{ end }}
+    

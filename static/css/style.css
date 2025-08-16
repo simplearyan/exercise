@@ -1,0 +1,572 @@
+/* --- CSS Variables and Global Styles --- */
+:root {
+    --primary-purple: #9b59b6;
+    --primary-blue: #3498db;
+    --secondary-dark: #2c3e50;
+    --background-color: #f8f9fa;
+    --card-background: #ffffff;
+    --text-dark: #373e47;
+    --text-light: #6a737d;
+    --border-color: #e1e4e8;
+    --shadow: 0 1px 3px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.12);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--background-color);
+    color: var(--text-dark);
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+}
+
+/* --- Header & Navigation --- */
+.header {
+    background-color: var(--card-background);
+    border-bottom: 1px solid var(--border-color);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 0;
+}
+
+.navbar-left {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+
+.navbar-logo {
+    font-family: 'Roboto Mono', monospace;
+    font-size: 1.5rem;
+    font-weight: 700;
+    text-decoration: none;
+    color: var(--secondary-dark);
+}
+
+.navbar-links {
+    display: none;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.navbar-links a {
+    text-decoration: none;
+    color: var(--text-light);
+    font-weight: 500;
+    padding: 0.5rem;
+    border-radius: 4px;
+    transition: color 0.3s;
+}
+
+.navbar-links a:hover {
+    color: var(--text-dark);
+}
+
+.navbar-links .active {
+    color: var(--text-dark);
+    font-weight: 700;
+    border-bottom: 2px solid var(--primary-purple);
+}
+
+.navbar-right {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.btn {
+    padding: 0.75rem 1.25rem;
+    border-radius: 8px;
+    font-weight: 700;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background-color 0.3s, color 0.3s;
+    text-align: center;
+    display: inline-block;
+    white-space: nowrap;
+}
+
+.btn-primary {
+    background-color: var(--primary-purple);
+    color: white;
+    border: 1px solid var(--primary-purple);
+}
+
+.btn-primary:hover {
+    background-color: #8e44ad;
+}
+
+.btn-secondary {
+    background-color: transparent;
+    color: var(--text-dark);
+    border: 1px solid var(--text-dark);
+}
+
+.btn-secondary:hover {
+    background-color: var(--secondary-dark);
+    color: white;
+}
+
+.menu-toggle {
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 0.5rem;
+}
+
+/* --- Main Content --- */
+#main-content {
+    min-height: 80vh;
+    padding: 16px;
+}
+
+.page {
+    padding: 2rem 0;
+}
+
+/* --- General Hero Section --- */
+.language-hero {
+    text-align: center;
+    margin-bottom: 2rem;
+    padding: 2rem 0;
+}
+
+.language-hero h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    font-weight: 700;
+}
+
+.language-hero p {
+    font-size: 1.1rem;
+    color: var(--text-light);
+    max-width: 600px;
+    margin: 0 auto 2rem;
+}
+
+/* --- Course Grid (Used on Homepage and /courses/) --- */
+.course-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+}
+
+/* --- Master Course Card (on /courses/ page) --- */
+.m-course-card {
+    background-color: var(--card-background);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    box-shadow: var(--shadow);
+    transition: transform 0.3s, box-shadow 0.3s;
+    text-decoration: none;
+    color: var(--text-dark);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden; /* Ensures the image corners are rounded */
+}
+
+.m-course-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1), 0 8px 24px rgba(0,0,0,0.1);
+}
+
+.m-course-card-image {
+    width: 100%;
+    height: 180px;
+    overflow: hidden;
+}
+
+.m-course-card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.m-course-card-content {
+    padding: 1.5rem;
+}
+
+.m-course-card-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.m-course-card-desc {
+    font-size: 0.9rem;
+    color: var(--text-light);
+}
+
+/* --- Single Course Page --- */
+.m-course-header {
+    background-color: var(--card-background);
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 2rem;
+    border: 1px solid var(--border-color);
+}
+
+.m-course-cover-image {
+    max-height: 350px;
+    width: 100%;
+}
+
+.m-course-cover-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.m-course-header-content {
+    padding: 2rem;
+}
+
+.m-course-header-content h1 {
+    font-size: 2.25rem;
+    margin-bottom: 0.5rem;
+}
+
+.m-course-header-content p {
+    font-size: 1.1rem;
+    color: var(--text-light);
+}
+
+.m-course-body {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+}
+
+.m-course-main-content h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.m-course-lesson-list h3 {
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+}
+
+.m-lesson-card {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    background-color: var(--card-background);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    text-decoration: none;
+    color: var(--text-dark);
+    transition: background-color 0.2s, border-color 0.2s;
+}
+
+.m-lesson-card:hover {
+    background-color: #f8f9fa;
+    border-color: #d1d5db;
+}
+
+.m-lesson-card-icon {
+    font-size: 1.2rem;
+    color: var(--primary-purple);
+}
+
+.m-lesson-card-content h4 {
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+/* --- Single Lesson Page --- */
+/*
+==============================================
+--- Single Lesson Page Styles ---
+==============================================
+*/
+
+/*
+==============================================
+--- Single Lesson Page Styles ---
+==============================================
+*/
+
+/* --- Main Layout Grid --- */
+.m-lesson-grid {
+    display: grid;
+    grid-template-columns: 1fr; /* Single column on mobile */
+    gap: 2rem;
+}
+
+/* --- Main Content Container --- */
+.m-lesson-container {
+    max-width: 800px;
+    background-color: var(--card-background);
+    padding: 2.5rem;
+    border-radius: var(--border-radius);
+    border: 1px solid var(--border-color);
+}
+
+.m-lesson-breadcrumb {
+    margin-bottom: 1.5rem;
+}
+
+.m-lesson-breadcrumb a {
+    text-decoration: none;
+    color: var(--primary-purple);
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.m-lesson-breadcrumb a:hover {
+    text-decoration: underline;
+}
+
+.m-lesson-container h1 {
+    margin-bottom: 1.5rem;
+    font-size: clamp(1.8rem, 5vw, 2.25rem); /* Responsive font size */
+}
+
+/*
+==============================================
+--- Table of Contents (TOC) Styles ---
+==============================================
+*/
+
+/* --- Mobile Dropdown Styles --- */
+
+/* Hide the desktop sidebar on mobile */
+.m-lesson-sidebar-desktop {
+    display: none;
+}
+
+/* The main container for the dropdown */
+.m-lesson-sidebar {
+    margin-bottom: 2rem;
+}
+
+.toc-dropdown-toggle {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 1rem 1.5rem;
+    background-color: var(--card-background);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-dark);
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.toc-dropdown-toggle:hover {
+    background-color: #f8f9fa;
+}
+
+.toc-dropdown-toggle i {
+    transition: transform 0.3s ease;
+}
+
+/* The TOC list itself is hidden by default */
+.m-lesson-toc {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease-in-out;
+    background-color: var(--card-background);
+    border: 1px solid var(--border-color);
+    border-top: none;
+    border-radius: 0 0 var(--border-radius) var(--border-radius);
+    padding: 0 1.5rem;
+}
+
+/* When the dropdown is open, expand the list */
+.toc-dropdown.is-open .m-lesson-toc {
+    padding: 1.5rem;
+}
+
+.m-lesson-toc ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.m-lesson-toc li {
+    margin-bottom: 0.5rem;
+}
+
+.m-lesson-toc a {
+    display: block;
+    text-decoration: none;
+    color: var(--text-light);
+    font-size: 0.9rem;
+    padding: 0.25rem 0;
+    transition: all 0.2s ease-in-out;
+}
+
+.m-lesson-toc a:hover {
+    color: var(--text-dark);
+}
+
+.m-lesson-toc a.active {
+    color: var(--primary-purple);
+    font-weight: 600;
+}
+
+.m-lesson-toc ul ul {
+    padding-left: 1rem;
+    margin-top: 0.5rem;
+}
+
+/*
+==============================================
+--- Responsive Grid & Desktop Sidebar ---
+==============================================
+*/
+
+/* For very small screens */
+@media (max-width: 576px) {
+    .m-lesson-container {
+        padding: 1.5rem; /* Reduce padding */
+    }
+    .toc-dropdown-toggle {
+        padding: 0.75rem 1rem; /* Tighter padding */
+    }
+}
+
+
+/* For medium screens and up */
+@media (min-width: 992px) {
+    .m-lesson-grid {
+        grid-template-columns: 1fr 250px; 
+    }
+
+    /* Hide the mobile dropdown container */
+    .m-lesson-sidebar {
+        display: none;
+    }
+
+    /* Show and style the desktop sidebar */
+    .m-lesson-sidebar-desktop {
+        display: block;
+        position: sticky;
+        top: 100px;
+        align-self: start;
+    }
+
+    .m-lesson-sidebar-desktop .m-lesson-toc {
+        /* Reset styles for sidebar view */
+        max-height: none;
+        background-color: transparent;
+        border: none;
+        border-radius: 0;
+        padding: 0;
+        padding-left: 1.5rem;
+        border-left: 2px solid var(--border-color);
+    }
+
+    .m-lesson-sidebar-desktop .m-lesson-toc h3 {
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: var(--text-light);
+        margin-bottom: 1rem;
+        font-weight: 600;
+    }
+
+    .m-lesson-sidebar-desktop .m-lesson-toc a {
+        border-left: 2px solid transparent;
+        padding-left: 1rem;
+        margin-left: -1.6rem; /* Aligns the active border with the main border */
+    }
+
+    .m-lesson-sidebar-desktop .m-lesson-toc a.active {
+        border-left-color: var(--primary-purple);
+        transform: translateX(4px);
+    }
+}
+
+
+
+
+/* --- Footer --- */
+.footer {
+    background-color: var(--secondary-dark);
+    color: white;
+    padding: 2rem 0;
+    text-align: center;
+    margin-top: 2rem;
+}
+
+/* --- Media Queries --- */
+@media (max-width: 768px) {
+    .navbar-links {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background-color: var(--card-background);
+        border-top: 1px solid var(--border-color);
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        padding: 1rem 0;
+    }
+    .navbar-links.open {
+        display: flex;
+    }
+    .navbar-links a {
+        padding: 1rem 1.5rem;
+        color: var(--text-dark);
+        border-bottom: 1px solid var(--border-color);
+    }
+    .navbar-links a:hover {
+        background-color: var(--background-color);
+    }
+    .navbar-links .active {
+        border-bottom: 2px solid var(--primary-purple);
+    }
+    .menu-toggle {
+        display: block;
+    }
+    .navbar-right .btn {
+        display: none;
+    }
+    .m-lesson-container{
+        padding: 4px;
+    }
+}
+
+@media (min-width: 769px) {
+    .navbar-links {
+        display: flex;
+    }
+    .menu-toggle {
+        display: none;
+    }
+}
+
+@media (min-width: 992px) {
+    .m-course-body {
+        grid-template-columns: 2fr 1fr;
+    }
+}

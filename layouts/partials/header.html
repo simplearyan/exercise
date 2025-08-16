@@ -1,0 +1,32 @@
+<header class="header">
+    <div class="container">
+        <nav class="navbar">
+            <div class="navbar-left">
+                <a href="{{ "/" | relURL }}" class="navbar-logo">exercism</a>
+                <div class="navbar-links" id="navbar-links">
+                    <a href="{{ "/courses/" | relURL }}" class="active">Courses</a>
+                </div>
+            </div>
+            <!-- NEW: Centered Search Bar for Desktop -->
+            <div class="navbar-center">
+                <div class="navbar-search-container" id="navbar-search">
+                    <i class="fas fa-search"></i>
+                    <span>Search...</span>
+                </div>
+            </div>
+
+
+            <div class="navbar-right">
+                <!-- Search Toggle for Mobile -->
+                <button class="search-toggle-btn" id="search-toggle" aria-label="Open search">
+                    <i class="fas fa-search"></i>
+                </button>
+                <a href="#" class="btn btn-secondary">Log in</a>
+                <a href="#" class="btn btn-primary">Sign up</a>
+                <div class="menu-toggle" id="menu-toggle">
+                    <i class="fas fa-bars"></i>
+                </div>
+            </div>
+        </nav>
+    </div>
+</header>

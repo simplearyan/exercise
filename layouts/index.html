@@ -1,0 +1,25 @@
+{{ define "main" }}
+<div class="container page">
+    <div class="language-hero">
+        <h1>{{ .Title }}</h1>
+        <p>{{ .Content }}</p>
+    </div>
+    <div class="course-grid">
+        {{/*  Use .Site.GetPage to access the courses section and list its pages  */}}
+        {{ $coursesPage := .Site.GetPage "courses" }}
+        {{ range $coursesPage.Sections }}
+        <a href="{{ .RelPermalink }}" class="m-course-card">
+            {{ with .Params.cover_image }}
+            <div class="m-course-card-image">
+                <img src="{{ . }}" alt="Cover image for {{ $.Title }}">
+            </div>
+            {{ end }}
+            <div class="m-course-card-content">
+                <h3 class="m-course-card-title">{{ .Title }}</h3>
+                <p class="m-course-card-desc">{{ .Params.description }}</p>
+            </div>
+        </a>
+        {{ end }}
+    </div>
+</div>
+{{ end }}

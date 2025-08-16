@@ -1,0 +1,184 @@
+{{ define "main" }}
+
+{{/* This page has two jobs:
+    1. If it's the main /courses/ page, it lists all course sections and provides search.
+    2. If it's a specific course page (e.g., /courses/javascript-basics/), it lists the lessons within it.
+*/}}
+
+{{ if .IsNode }}
+    {{/* --- Renders the main /courses/ page --- */}}
+    <div class="container page">
+        <div class="language-hero">
+            <h1>{{ .Title }}</h1>
+            <p>{{ .Content }}</p>
+            <!-- Search Input -->
+            <div class="search-container">
+                <i class="fas fa-search search-icon"></i>
+                <input type="search" id="course-search" placeholder="Search for courses..." class="search-input">
+            </div>
+        </div>
+        <div class="course-grid" id="course-grid">
+            {{/* Loop through the subdirectories in this section (each is a course) */}}
+            {{ range .Sections }}
+            {{ $course := . }}
+            <a href="{{ .RelPermalink }}" class="m-course-card">
+                {{ with .Params.cover_image }}
+                <div class="m-course-card-image">
+                    <img src="{{ . }}" alt="Cover image for {{ $course.Title }}">
+                </div>
+                {{ end }}
+                <div class="m-course-card-content">
+                    <h3 class="m-course-card-title">{{ .Title }}</h3>
+                    <p class="m-course-card-desc">{{ .Params.description }}</p>
+                    
+                    {{ with .Params.tags }}
+                    <div class="taxonomy-list">
+                        {{ range . }}
+                        <a href="{{ printf "/tags/%s" (urlize .) | relURL }}" class="tag-link">{{ . }}</a>
+                        {{ end }}
+                    </div>
+                    {{ end }}
+                </div>
+            </a>
+            {{ end }}
+        </div>
+    </div>
+
+    <!-- Fuse.js Search Script -->
+    <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.6.2"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const searchInput = document.getElementById('course-search');
+            const courseGrid = document.getElementById('course-grid');
+            const courseCards = Array.from(courseGrid.getElementsByClassName('m-course-card'));
+
+            // 1. Create the searchable list from the DOM
+            const courseList = courseCards.map(card => {
+                return {
+                    title: card.querySelector('.m-course-card-title').textContent,
+                    description: card.querySelector('.m-course-card-desc').textContent,
+                    tags: Array.from(card.querySelectorAll('.tag-link')).map(t => t.textContent).join(' '),
+                    element: card // Keep a reference to the original DOM element
+                };
+            });
+
+            // 2. Configure Fuse.js
+            const options = {
+                includeScore: true,
+                keys: ['title', 'description', 'tags'],
+                threshold: 0.4
+            };
+            const fuse = new Fuse(courseList, options);
+
+            // 3. Add event listener for the search input
+            searchInput.addEventListener('input', function (e) {
+                const query = e.target.value;
+
+                if (query) {
+                    const results = fuse.search(query);
+                    const resultElements = results.map(result => result.item.element);
+
+                    // Hide all cards first
+                    courseCards.forEach(card => card.style.display = 'none');
+                    // Then display only the results
+                    resultElements.forEach(card => card.style.display = 'flex');
+                } else {
+                    // If search is empty, show all cards
+                    courseCards.forEach(card => card.style.display = 'flex');
+                }
+            });
+        });
+    </script>
+
+   
+    <!-- CSS Styles for the Search Bar -->
+    <style>
+        .search-container {
+            position: relative;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 1rem 1.5rem 1rem 3.5rem; /* Add padding for the icon */
+            border-radius: 999px; /* Pill shape */
+            border: 1px solid var(--border-color);
+            font-size: 1rem;
+            background-color: var(--card-background);
+            transition: all 0.3s ease;
+            -webkit-appearance: none;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--primary-purple);
+            box-shadow: 0 0 0 3px rgba(142, 68, 173, 0.2);
+        }
+
+        .search-input::placeholder {
+            color: var(--text-light);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 1.5rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-light);
+            pointer-events: none; /* Make sure the icon doesn't block clicks */
+            transition: color 0.3s ease;
+        }
+
+        .search-container:focus-within .search-icon {
+            color: var(--primary-purple);
+        }
+    </style>
+
+
+{{ else }}
+    {{/* --- Renders a single course page with its lessons --- */}}
+    <div class="container page">
+        <div class="m-course-header">
+            {{ with .Params.cover_image }}
+            <div class="m-course-cover-image">
+                <img src="{{ . }}" alt="Cover for {{ $.Title }}">
+            </div>
+            {{ end }}
+            <div class="m-course-header-content">
+                <h1>{{ .Title }}</h1>
+                <p>{{ .Params.description }}</p>
+                {{ with .Params.tags }}
+                <div class="taxonomy-list">
+                    {{ range . }}
+                    {{ $href := printf "/tags/%s" (urlize .) }}
+                    <a href="{{ $href | relURL }}" class="tag-link">{{ . }}</a>
+                    {{ end }}
+                </div>
+                {{ end }}
+            </div>
+        </div>
+
+        <div class="m-course-body">
+            <div class="m-course-main-content">
+                <h2>About this Course</h2>
+                {{ .Content }}
+            </div>
+            <div class="m-course-lesson-list">
+                <h3>Course Lessons</h3>
+                {{ range .Pages.ByWeight }}
+                <a href="{{ .RelPermalink }}" class="m-lesson-card">
+                    <div class="m-lesson-card-icon">
+                        <i class="fas fa-book-open"></i>
+                    </div>
+                    <div class="m-lesson-card-content">
+                        <h4>{{ .Title }}</h4>
+                    </div>
+                </a>
+                {{ end }}
+            </div>
+        </div>
+    </div>
+{{ end }}
+
+{{ end }}

@@ -1,0 +1,154 @@
+/*
+==============================================
+--- NEW: Markdown & Code Content Styling ---
+==============================================
+*/
+
+/* These styles target the content rendered from Markdown files */
+.m-lesson-content h1,
+.m-lesson-content h2,
+.m-lesson-content h3,
+.m-lesson-content h4,
+.m-lesson-content h5,
+.m-lesson-content h6 {
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    font-weight: 600;
+    line-height: 1.3;
+}
+
+.m-lesson-content h1 { font-size: 2.25rem; }
+.m-lesson-content h2 { font-size: 1.75rem; }
+.m-lesson-content h3 { font-size: 1.25rem; }
+
+.m-lesson-content p {
+    margin-bottom: 1.25rem;
+}
+
+.m-lesson-content a {
+    color: var(--primary-purple);
+    text-decoration: none;
+    border-bottom: 1px solid #d1c4e9;
+    transition: all 0.2s ease;
+}
+
+.m-lesson-content a:hover {
+    background-color: #f4e8f7;
+}
+
+.m-lesson-content ul,
+.m-lesson-content ol {
+    margin-bottom: 1.25rem;
+    padding-left: 1.5rem;
+}
+
+.m-lesson-content li {
+    margin-bottom: 0.5rem;
+}
+
+.m-lesson-content blockquote {
+    margin: 1.5rem 0;
+    padding: 1rem 1.5rem;
+    border-left: 4px solid var(--primary-purple);
+    background-color: #f8f9fa;
+    color: var(--text-light);
+    border-radius: 0 var(--border-radius) var(--border-radius) 0;
+}
+
+.m-lesson-content hr {
+    border: 0;
+    height: 1px;
+    background-color: var(--border-color);
+    margin: 2rem 0;
+}
+
+/* --- Markdown Tables --- */
+.m-lesson-content table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 2rem 0;
+    overflow: hidden;
+    border-radius: var(--border-radius);
+    border: 1px solid var(--border-color);
+}
+
+.m-lesson-content th,
+.m-lesson-content td {
+    padding: 0.75rem 1rem;
+    text-align: left;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.m-lesson-content thead th {
+    background-color: #f8f9fa;
+    font-weight: 600;
+}
+
+.m-lesson-content tbody tr:nth-child(even) {
+    background-color: #fdfdff;
+}
+
+.m-lesson-content tbody tr:hover {
+    background-color: #f4e8f7;
+}
+
+
+/* --- Code Highlighting (Chroma) & LaTeX --- */
+.m-lesson-content .highlight {
+    position: relative;
+    margin: 1.5rem 0;
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    border: 1px solid var(--border-color);
+}
+
+.m-lesson-content pre {
+    margin: 0;
+    padding: 1.25rem;
+    overflow-x: auto;
+    font-family: 'Roboto Mono', monospace;
+    font-size: 0.9rem;
+}
+
+/* For code blocks with line numbers */
+.m-lesson-content .lntable {
+    border-spacing: 0;
+    padding: 0;
+}
+.m-lesson-content .lntd {
+    padding: 0;
+    vertical-align: top;
+}
+/* Line numbers */
+.m-lesson-content .ln {
+    padding-right: 1rem;
+    color: var(--text-light);
+    user-select: none;
+    text-align: right;
+}
+
+/* LaTeX / KaTeX Styling */
+.m-lesson-content .katex-display {
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 1rem 0;
+}
+
+.katex-display>.katex {
+    display: flex;
+    text-align:start;
+    white-space: normal;
+    overflow-x: scroll;
+}
+
+.katex {
+    font: normal 1.21em KaTeX_Main, Times New Roman, serif;
+    /* font: 500 0.9em KaTeX_Main, Times New Roman, serif; */
+    line-height: 1.2;
+    text-indent: 0;
+    text-rendering: auto;
+}
+
+.katex-display>.katex>.katex-html{
+    overflow: scroll;
+}

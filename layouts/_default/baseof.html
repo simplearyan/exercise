@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="{{ .Site.LanguageCode | default "en" }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ if .IsHome }}{{ .Site.Title }}{{ else }}{{ .Title }} | {{ .Site.Title }}{{ end }}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="{{ "/css/style.css" | relURL }}">
+    <link rel="stylesheet" href="{{ "/css/search.css" | relURL }}">
+    <link rel="stylesheet" href="{{ "/css/toc.css" | relURL }}">
+    {{/* --- Add these lines for KaTeX --- */}}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/contrib/auto-render.min.js"
+    onload="renderMathInElement(document.body, {delimiters: [
+        {left: '$$', right: '$$', display: true},
+        {left: '\\[', right: '\\]', display: true},
+        {left: '$', right: '$', display: false},
+        {left: '\\(', right: '\\)', display: false}
+        ], ignoredClasses: [], onlyRenderIfClassPresent: true, renderClass: 'katex-desc'});">
+    </script>
+    <link rel="stylesheet" href="{{ "/css/typography.css" | relURL }}">
+
+    {{ partial "head.html" . }}
+
+</head>
+<body>
+    {{ partial "header.html" . }}
+    <main id="main-content">
+        {{- block "main" . }}{{- end }}
+    </main>
+    {{ partial "footer.html" . }}
+    {{/*  <script src="{{ "/js/main.js" | relURL }}"></script>  */}}
+    <script src="{{ "/js/toc.js" | relURL }}"></script>
+    <script src="{{ "/js/toc-dropdown.js" | relURL }}"></script>
+
+   <!-- Search Modal HTML -->
+    <div class="search-modal" id="search-modal" aria-hidden="true">
+        <div class="search-modal-content">
+            <div class="search-container">
+                <i class="fas fa-search search-icon"></i>
+                <input type="search" id="search-input" placeholder="Search courses and lessons..." class="search-input">
+                <button class="search-close-btn" id="search-close" aria-label="Close search">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <ul class="search-results" id="search-results"></ul>
+        </div>
+    </div>
+
+    <script src="{{ "/js/main.js" | relURL }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.6.2"></script>
+    
+    <!-- Global Search Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            let fuse;
+            let searchIndex;
+
+            // Fetch the search index
+            fetch('/index.json')
+                .then(response => response.json())
+                .then(data => {
+                    searchIndex = data;
+                    const fuseOptions = {
+                        keys: [
+                            { name: 'title', weight: 0.7 }, 
+                            { name: 'summary', weight: 0.3 }, 
+                            { name: 'content', weight: 0.1 },
+                            { name: 'tags', weight: 0.5 },
+                            { name: 'categories', weight: 0.5 },
+                            { name: 'language', weight: 0.5 }
+                        ],
+                        includeScore: true,
+                        includeMatches: true, // Enable highlighting
+                        threshold: 0.4,
+                        minMatchCharLength: 2,
+                    };
+                    fuse = new Fuse(searchIndex, fuseOptions);
+                })
+                .catch(error => console.error('Error fetching search index:', error));
+
+            const searchModal = document.getElementById('search-modal');
+            const searchToggleBtn = document.getElementById('search-toggle'); // Mobile button
+            const navbarSearch = document.getElementById('navbar-search'); // Desktop button
+            const searchCloseBtn = document.getElementById('search-close');
+            const searchInput = document.getElementById('search-input');
+            const searchResults = document.getElementById('search-results');
+
+            const openModal = () => {
+                searchModal.style.display = 'flex';
+                searchModal.setAttribute('aria-hidden', 'false');
+                document.body.style.overflow = 'hidden';
+                searchInput.focus();
+            };
+
+            // Add event listeners to both buttons
+            if (searchToggleBtn) {
+                searchToggleBtn.addEventListener('click', openModal);
+            }
+            if (navbarSearch) {
+                navbarSearch.addEventListener('click', openModal);
+            }
+
+            {{/*  if (searchToggleBtn) {
+                searchToggleBtn.addEventListener('click', () => {
+                    searchModal.style.display = 'flex';
+                    searchModal.setAttribute('aria-hidden', 'false');
+                    document.body.style.overflow = 'hidden';
+                    searchInput.focus();
+                });
+            }  */}}
+
+            const closeModal = () => {
+                searchModal.style.display = 'none';
+                searchModal.setAttribute('aria-hidden', 'true');
+                document.body.style.overflow = '';
+            };
+
+            if (searchCloseBtn) searchCloseBtn.addEventListener('click', closeModal);
+            searchModal.addEventListener('click', (e) => e.target === searchModal && closeModal());
+            document.addEventListener('keydown', (e) => e.key === 'Escape' && closeModal());
+
+            const highlight = (text, indices) => {
+                const result = [];
+                let lastIndex = 0;
+                indices.forEach(pair => {
+                    const [start, end] = pair;
+                    if (start > lastIndex) {
+                        result.push(text.substring(lastIndex, start));
+                    }
+                    result.push(`<mark>${text.substring(start, end + 1)}</mark>`);
+                    lastIndex = end + 1;
+                });
+                if (lastIndex < text.length) {
+                    result.push(text.substring(lastIndex));
+                }
+                return result.join('');
+            };
+
+            if (searchInput) {
+                searchInput.addEventListener('input', () => {
+                    const query = searchInput.value;
+                    if (!fuse || query.length < 2) {
+                        searchResults.innerHTML = '';
+                        return;
+                    }
+
+                    const results = fuse.search(query);
+                    searchResults.innerHTML = '';
+
+                    if (results.length > 0) {
+                        results.slice(0, 10).forEach(result => {
+                            const item = result.item;
+                            const li = document.createElement('li');
+                            
+                            let title = item.title;
+                            let summary = item.summary;
+
+                            const titleMatch = result.matches.find(m => m.key === 'title');
+                            if (titleMatch) {
+                                title = highlight(item.title, titleMatch.indices);
+                            }
+
+                            const summaryMatch = result.matches.find(m => m.key === 'summary');
+                            if (summaryMatch) {
+                                summary = highlight(item.summary, summaryMatch.indices);
+                            }
+
+                            li.innerHTML = `<a href="${item.permalink}">
+                                ${item.parent ? `<span class="search-result-parent">${item.parent}</span>` : ''}
+                                <h4>${title}</h4>
+                                <p>${summary}</p>
+                            </a>`;
+                            searchResults.appendChild(li);
+
+                            // Render LaTeX in the newly added search result
+                            renderMathInElement(li, {
+                                delimiters: [
+                                    {left: '$$', right: '$$', display: true},
+                                    {left: '$', right: '$', display: false}
+                                ]
+                            });
+                        });
+                    } else {
+                        const li = document.createElement('li');
+                        li.className = 'no-results';
+                        li.textContent = 'No results found';
+                        searchResults.appendChild(li);
+                    }
+                });
+            }
+        });
+    </script>
+    
+
+</body>
+</html>

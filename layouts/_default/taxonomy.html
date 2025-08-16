@@ -1,0 +1,26 @@
+{{ define "main" }}
+<div class="container page">
+    <div class="language-hero">
+        <h1>{{ .Title }}</h1>
+        <p>Showing all courses for this term.</p>
+    </div>
+    <div class="course-grid">
+        {{/* Loop through all pages associated with this taxonomy term */}}
+        {{ range .Pages }}
+        <a href="{{ .RelPermalink }}" class="m-course-card">
+            {{ with .Params.cover_image }}
+            <div class="m-course-card-image">
+                <img src="{{ . }}" alt="Cover image for {{ $.Title }}">
+            </div>
+            {{ end }}
+            <div class="m-course-card-content">
+                <h3 class="m-course-card-title">{{ .Title }}</h3>
+                {{ with .Params.description }}
+                <p class="m-course-card-desc">{{ . }}</p>
+                {{ end }}
+            </div>
+        </a>
+        {{ end }}
+    </div>
+</div>
+{{ end }}

@@ -1,0 +1,30 @@
+baseURL = "https://example.org/"
+languageCode = "en-us"
+title = "Exercism"
+
+# Enable JSON output for the search index
+[outputs]
+  home = ["HTML", "RSS", "JSON"]
+
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
+  [markup.katex]
+    # Enables KaTeX rendering for math blocks
+    enabled = true
+
+# Configure the theme
+[params]
+  description = "The best collection of quick, lightweight browser games."
+  keywords = ["games", "browser", "casual"]
+  author = "Pinnotes"
+  image = "https://yt3.googleusercontent.com/3FLMvdMbKO73nwGgYJ2ajLJfZ2eoao7d5dwiPEWD6vtWS4yWXzs3OpGnRkl0ELpKki3VCz2C8-8=w1060-fcrop64=1,00005a57ffffa5a8-k-c0xffffffff-no-nd-rj"
+  googleAnalyticsID = "G-XXXXXXXXXX" # Replace with your actual Google Analytics ID
+
+
+# Configure taxonomies (categories and tags)
+[taxonomies]
+  category = "categories"
+  tag = "tags"
+

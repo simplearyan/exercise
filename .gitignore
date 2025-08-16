@@ -1,0 +1,39 @@
+# Generated public folder
+/public/
+
+# Hugo's cache and resource folders
+/resources/
+/data/hugo_stats.json
+
+# Hugo build lock file
+.hugo_build.lock
+
+# Executable and binaries
+hugo.exe
+hugo
+
+# OS-generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Editor and IDE directories
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Node dependencies (if you use npm/yarn for frontend tooling)
+/node_modules/
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+
+# Temporary and backup files
+*~
+*.bak
+*.swp

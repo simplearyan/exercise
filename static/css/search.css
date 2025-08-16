@@ -1,0 +1,202 @@
+/*
+==============================================
+--- Global Search Modal Styles ---
+==============================================
+*/
+
+/* --- Navbar Search (Desktop) --- */
+.navbar-center {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    padding: 0 1rem; /* Add some padding to not touch other elements */
+}
+
+.navbar-search-container {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    background-color: var(--background-color);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 0.5rem 1rem;
+    width: 100%;
+    max-width: 400px;
+    color: var(--text-light);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.navbar-search-container:hover {
+    background-color: #eef2f5;
+    border-color: #d1d9e2;
+}
+
+/* The button in the navbar to open the search modal (Mobile) */
+.search-toggle-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.2rem;
+    color: var(--text-light);
+    padding: 0.5rem;
+    transition: color 0.3s ease;
+    display: none; /* Hidden by default, shown on mobile */
+}
+
+.search-toggle-btn:hover {
+    color: var(--primary-purple);
+}
+
+/* The main modal overlay */
+.search-modal {
+    display: none; /* Hidden by default, shown with JS */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(244, 247, 249, 0.5); /* Lighter backdrop */
+    backdrop-filter: blur(8px);
+    z-index: 200;
+    align-items: flex-start;
+    justify-content: center;
+    padding-top: 10vh;
+}
+
+/* The content box of the modal */
+.search-modal-content {
+    background-color: var(--card-background);
+    width: 90%;
+    max-width: 650px; /* Slightly wider */
+    border-radius: var(--border-radius);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+    overflow: hidden;
+    border: 1px solid var(--border-color);
+    animation: fadeInDown 0.3s ease-out;
+}
+
+/* The search bar container inside the modal */
+.search-modal .search-container {
+    position: relative;
+    border-bottom: 1px solid var(--border-color);
+}
+
+/* The actual input field */
+.search-modal .search-input {
+    width: 100%;
+    padding: 1.5rem 4rem 1.5rem 3.5rem;
+    font-size: 1.1rem;
+    border: none;
+    border-radius: 0;
+    background-color: transparent;
+}
+.search-modal .search-input:focus {
+    outline: none;
+    box-shadow: none;
+}
+
+/* The search icon inside the input field */
+.search-modal .search-icon {
+    position: absolute;
+    left: 1.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-light);
+}
+
+/* The close button (X) */
+.search-close-btn {
+    position: absolute;
+    right: 1.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    color: var(--text-light);
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+.search-close-btn:hover {
+    color: var(--text-dark);
+}
+
+/* The list that holds the search results */
+.search-results {
+    list-style: none;
+    margin: 0;
+    padding: 0.5rem; /* Add padding around the results list */
+    max-height: 60vh;
+    overflow-y: auto;
+}
+
+/* Individual result items */
+.search-results li a {
+    display: block;
+    padding: 1rem 1.25rem;
+    text-decoration: none;
+    color: var(--text-dark);
+    border-radius: 8px; /* Rounded corners for each result */
+    transition: background-color 0.2s ease;
+}
+
+.search-results li a:hover {
+    background-color: var(--background-color);
+}
+
+.search-result-parent {
+    display: block;
+    font-size: 0.8rem;
+    color: var(--text-light);
+    margin-bottom: 0.25rem;
+}
+
+.search-results h4 {
+    margin: 0 0 0.25rem 0;
+    font-weight: 600;
+}
+
+.search-results p {
+    margin: 0;
+    font-size: 0.9rem;
+    color: var(--text-light);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.search-results mark {
+    background-color: #f4e8f7;
+    color: var(--primary-purple);
+    font-weight: 600;
+    border-radius: 3px;
+    padding: 1px 2px;
+}
+
+.search-results .no-results {
+    padding: 1.5rem;
+    text-align: center;
+    color: var(--text-light);
+}
+
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* --- Responsive Search --- */
+@media (max-width: 768px) {
+    .navbar-center {
+        display: none; /* Hide desktop search */
+    }
+    .search-toggle-btn {
+        display: block; /* Show mobile search toggle */
+    }
+}

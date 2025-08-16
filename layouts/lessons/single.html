@@ -1,0 +1,17 @@
+    {{ define "main" }}
+    <div class="container page">
+        <div class="m-lesson-container">
+            {{/* Breadcrumb link back to the parent course */}}
+            <div class="m-lesson-breadcrumb">
+                <a href="{{ .Parent.RelPermalink }}">
+                    <i class="fas fa-arrow-left"></i> Back to {{ .Parent.Title }}
+                </a>
+            </div>
+            <h1>{{ .Title }}</h1>
+            <div class="m-lesson-content">
+                {{ .Content }}
+            </div>
+        </div>
+    </div>
+    {{ end }}
+    
