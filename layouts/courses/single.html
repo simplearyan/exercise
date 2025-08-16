@@ -1,6 +1,22 @@
 {{ define "main" }}
 <div class="container page">
     <div class="m-lesson-grid">
+        <!-- Sidebar for All Course Lessons (Desktop Left) -->
+        <aside class="course-lesson-sidebar">
+            <nav class="course-lesson-nav">
+                <h4>{{ .Parent.Title }}</h4>
+                <ul>
+                    {{ range .Parent.Pages.ByWeight }}
+                    <li>
+                        <a href="{{ .RelPermalink }}" class="{{ if eq .Permalink $.Permalink }}active{{ end }}">
+                            {{ .Title }}
+                        </a>
+                    </li>
+                    {{ end }}
+                </ul>
+            </nav>
+        </aside>
+
         <!-- Main Lesson Content -->
         <div class="m-lesson-container">
             <div class="m-lesson-breadcrumb">

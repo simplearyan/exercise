@@ -1,5 +1,51 @@
 /*
 ==============================================
+--- Single Lesson Page Styles ---
+==============================================
+*/
+
+/* --- Main Layout Grid --- */
+.m-lesson-grid {
+    display: grid;
+    grid-template-columns: 1fr; /* Single column on mobile */
+    gap: 2rem;
+}
+
+/* --- Main Content Container --- */
+.m-lesson-container {
+    /* max-width: 800px; */
+    /* background-color: var(--card-background); */
+    /* padding: 2.5rem; */
+    /* border-radius: var(--border-radius); */
+    /* border: 1px solid var(--border-color); */
+    /* This ensures the content container is in the correct grid area */
+    grid-column: 1 / -1; 
+}
+
+.m-lesson-breadcrumb {
+    margin-bottom: 1.5rem;
+}
+
+.m-lesson-breadcrumb a {
+    text-decoration: none;
+    color: var(--primary-purple);
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.m-lesson-breadcrumb a:hover {
+    text-decoration: underline;
+}
+
+.m-lesson-container h1 {
+    margin-bottom: 1.5rem;
+    font-size: clamp(1.8rem, 5vw, 2.25rem); /* Responsive font size */
+}
+
+/*
+==============================================
 --- Table of Contents (TOC) Styles ---
 ==============================================
 */
@@ -96,6 +142,12 @@
 
 /* --- Tablet and Medium Screens (TOC appears) --- */
 @media (min-width: 992px) {
+    .m-lesson-grid {
+        grid-template-columns: 1fr 250px; 
+    }
+    .m-lesson-container {
+        grid-column: 1 / 2; /* Content takes the first column */
+    }
     .m-lesson-sidebar {
         display: none; /* Hide mobile TOC */
     }
@@ -136,6 +188,13 @@
 
 /* --- Large Desktop Screens (Lesson Sidebar appears) --- */
 @media (min-width: 1200px) {
+    .m-lesson-grid {
+        grid-template-columns: 250px 1fr 250px; /* Lessons | Content | TOC */
+        gap: 2.5rem;
+    }
+    .m-lesson-container {
+        grid-column: 2 / 3; /* Content moves to the middle */
+    }
     .course-lesson-sidebar {
         display: block;
         position: sticky;
@@ -143,7 +202,47 @@
         align-self: start;
         grid-column: 1 / 2; /* Lesson list takes the first column */
     }
+    .course-lesson-nav h4 {
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: var(--text-light);
+        margin-bottom: 1rem;
+        font-weight: 600;
+        padding-bottom: 1rem;
+        border-bottom: 1px solid var(--border-color);
+    }
+    .course-lesson-nav ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+    .course-lesson-nav a {
+        display: block;
+        text-decoration: none;
+        color: var(--text-light);
+        font-size: 0.9rem;
+        padding: 0.5rem 0;
+        transition: all 0.2s ease-in-out;
+    }
+    .course-lesson-nav a:hover {
+        color: var(--text-dark);
+    }
+    .course-lesson-nav a.active {
+        color: var(--primary-purple);
+        font-weight: 600;
+    }
     .m-lesson-sidebar-desktop {
         grid-column: 3 / 4; /* TOC moves to the third column */
+    }
+}
+
+/* --- Small Screen Adjustments --- */
+@media (max-width: 576px) {
+    .m-lesson-container {
+        padding: 1.5rem; /* Reduce padding */
+    }
+    .toc-dropdown-toggle {
+        padding: 0.75rem 1rem; /* Tighter padding */
     }
 }
