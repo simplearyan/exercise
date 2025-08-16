@@ -1,53 +1,108 @@
 /*
 ==============================================
---- Table of Contents (TOC) Styles ---
+--- Mobile Toggles & Sidebar Styles (TOC.css) ---
 ==============================================
 */
 
-/* --- Mobile Dropdown Styles --- */
-.m-lesson-sidebar {
-    margin-bottom: 2rem;
-}
-
-.toc-dropdown-toggle {
+/* --- Mobile Toggle Bar --- */
+.mobile-nav-bar {
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    padding: 1rem 1.5rem;
+    border-bottom: 1px solid var(--border-color);
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    padding-top: 20px;
+    /* Add some top padding for better spacing */
+
+
+    /* MODIFICATION: Make it sticky on mobile */
+    position: sticky;
+    top: 0;
     background-color: var(--card-background);
-    border: 1px solid var(--border-color);
-    border-radius: var(--border-radius);
-    font-size: 1rem;
-    font-weight: 600;
-    color: var(--text-dark);
+    z-index: 100;
+
+}
+
+.mobile-nav-toggle {
+    background: none;
+    border: none;
     cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--text-dark);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem;
+    border-radius: 6px;
     transition: background-color 0.2s ease;
 }
 
-.toc-dropdown-toggle:hover {
-    background-color: #f8f9fa;
+.mobile-nav-toggle:hover {
+    background-color: var(--background-color);
 }
 
-.toc-dropdown-toggle i {
+.mobile-nav-toggle i {
     transition: transform 0.3s ease;
 }
 
-.m-lesson-toc {
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.4s ease-in-out;
-    background-color: var(--card-background);
-    border: 1px solid var(--border-color);
-    border-top: none;
-    border-radius: 0 0 var(--border-radius) var(--border-radius);
-    padding: 0 1.5rem;
+.mobile-sidebar-backdrop {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 150;
 }
 
-.toc-dropdown.is-open .m-lesson-toc {
+.mobile-sidebar-backdrop.is-active {
+    display: block;
+}
+
+body.sidebar-open {
+    overflow: hidden;
+}
+
+/* --- Mobile TOC Dropdown --- */
+.mobile-toc-container {
+    /* Hidden by default */
+    max-height: 0;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    overflow: hidden;
+    transition: max-height 0.4s ease, opacity 0.3s ease, transform 0.3s ease, visibility 0.3s;
+    margin-bottom: 1.5rem;
+    background-color: #f8f9fa; /* Lighter background for better contrast */
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);            
+    /* Add some padding for better spacing */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.253); /* Subtle shadow for depth */
+}
+
+.mobile-toc-container.is-open {
+    max-height: 500px;
+    overflow-y: scroll;
+    /* A sufficiently large value to allow content to expand */
+    position: sticky;  /* Make it sticky */
+    /* MODIFICATION: Position it below the mobile nav bar */                                                            
+    top: 60px;  
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+    z-index: 99; /* Ensure it appears above other content */
+}
+
+.mobile-toc-container .m-lesson-toc {
+    background-color: var(--card-background);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
     padding: 1.5rem;
 }
 
+/* --- Shared TOC Styles --- */
 .m-lesson-toc ul {
     list-style: none;
     padding: 0;
@@ -84,37 +139,77 @@
 
 /*
 ==============================================
---- Course Lesson Sidebar & Grid Styles ---
+--- Responsive Layouts & Sidebars ---
 ==============================================
 */
 
 /* --- Default Mobile Layout --- */
-.course-lesson-sidebar,
+/* Hide desktop sidebar */
 .m-lesson-sidebar-desktop {
     display: none;
 }
 
-/* --- Tablet and Medium Screens (TOC appears) --- */
+/* Style the mobile lesson sidebar (off-canvas) */
+.course-lesson-sidebar {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 300px;
+    background-color: var(--card-background);
+    z-index: 200;
+    transition: transform 0.3s ease-in-out;
+    padding: 2rem;
+    overflow-y: auto;
+    transform: translateX(-100%);
+    /* Start off-screen */
+}
+
+.course-lesson-sidebar.is-open {
+    transform: translateX(0);
+    /* Slide in */
+}
+
+
+/* --- Tablet and Medium Screens (TOC appears on right) --- */
 @media (min-width: 992px) {
-    .m-lesson-sidebar {
-        display: none; /* Hide mobile TOC */
+
+    .mobile-nav-bar,
+    .mobile-toc-container {
+        display: none;
+        /* Hide all mobile nav elements */
     }
+
+    .course-lesson-sidebar {
+        /* Reset sidebar for desktop view - still hidden until large screens */
+        display: none;
+        position: static;
+        transform: none;
+        padding: 0;
+        background-color: transparent;
+        border: none;
+        height: auto;
+        overflow-y: visible;
+    }
+
     .m-lesson-sidebar-desktop {
         display: block;
         position: sticky;
         top: 100px;
         align-self: start;
-        grid-column: 2 / 3; /* TOC takes the second column */
+        grid-column: 2 / 3;
     }
+
     .m-lesson-sidebar-desktop .m-lesson-toc {
         max-height: none;
         background-color: transparent;
         border: none;
-        border-radius: 0;
         padding: 0;
         padding-left: 1.5rem;
         border-left: 2px solid var(--border-color);
     }
+
     .m-lesson-sidebar-desktop .m-lesson-toc h3 {
         font-size: 0.9rem;
         text-transform: uppercase;
@@ -123,27 +218,164 @@
         margin-bottom: 1rem;
         font-weight: 600;
     }
+
     .m-lesson-sidebar-desktop .m-lesson-toc a {
         border-left: 2px solid transparent;
         padding-left: 1rem;
         margin-left: -1.6rem;
     }
+
     .m-lesson-sidebar-desktop .m-lesson-toc a.active {
         border-left-color: var(--primary-purple);
         transform: translateX(4px);
     }
 }
 
-/* --- Large Desktop Screens (Lesson Sidebar appears) --- */
+/* --- Large Desktop Screens (Lesson Sidebar appears on left) --- */
 @media (min-width: 1200px) {
     .course-lesson-sidebar {
         display: block;
         position: sticky;
         top: 100px;
         align-self: start;
-        grid-column: 1 / 2; /* Lesson list takes the first column */
+        grid-column: 1 / 2;
     }
+
+    .course-lesson-nav h4 {
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: var(--text-light);
+        margin-bottom: 1rem;
+        font-weight: 600;
+        padding-bottom: 1rem;
+        border-bottom: 1px solid var(--border-color);
+    }
+
+    .course-lesson-nav ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .course-lesson-nav a {
+        display: block;
+        text-decoration: none;
+        color: var(--text-light);
+        font-size: 0.9rem;
+        padding: 0.5rem 0;
+        transition: all 0.2s ease-in-out;
+    }
+
+    .course-lesson-nav a:hover {
+        color: var(--text-dark);
+    }
+
+    .course-lesson-nav a.active {
+        color: var(--primary-purple);
+        font-weight: 600;
+    }
+
     .m-lesson-sidebar-desktop {
-        grid-column: 3 / 4; /* TOC moves to the third column */
+        grid-column: 3 / 4;
+    }
+}
+
+
+/*
+==============================================
+--- Course Lesson Sidebar Menu Styles ---
+==============================================
+*/
+
+/* --- Default Mobile Layout (Off-Canvas Sidebar) --- */
+.course-lesson-sidebar {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 300px;
+    background-color: var(--card-background);
+    z-index: 200;
+    transition: transform 0.3s ease-in-out;
+    padding: 2rem;
+    overflow-y: auto;
+    transform: translateX(-100%);
+    /* Start off-screen */
+}
+
+.course-lesson-sidebar.is-open {
+    transform: translateX(0);
+    /* Slide in when active */
+}
+
+/* --- Shared Navigation Styles --- */
+.course-lesson-nav h4 {
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-light);
+    margin-bottom: 1rem;
+    font-weight: 600;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.course-lesson-nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.course-lesson-nav a {
+    display: block;
+    text-decoration: none;
+    color: var(--text-light);
+    font-size: 0.9rem;
+    padding: 0.5rem 0;
+    transition: all 0.2s ease-in-out;
+}
+
+.course-lesson-nav a:hover {
+    color: var(--text-dark);
+}
+
+.course-lesson-nav a.active {
+    color: var(--primary-purple);
+    font-weight: 600;
+}
+
+
+/*
+==============================================
+--- Responsive Desktop Layouts ---
+==============================================
+*/
+
+/* --- Hide the sidebar on medium screens --- */
+@media (min-width: 992px) {
+    .course-lesson-sidebar {
+        display: none;
+        /* Hide between 992px and 1199px */
+        position: static;
+        transform: none;
+        padding: 0;
+        background-color: transparent;
+        border: none;
+        height: auto;
+        overflow-y: visible;
+    }
+}
+
+/* --- Show sidebar on large desktop screens --- */
+@media (min-width: 1200px) {
+    .course-lesson-sidebar {
+        display: block;
+        position: sticky;
+        top: 100px;
+        align-self: start;
+        grid-column: 1 / 2;
+        /* Position in the first column */
     }
 }

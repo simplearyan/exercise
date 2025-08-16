@@ -179,12 +179,13 @@ body {
     color: var(--text-dark);
     display: flex;
     flex-direction: column;
-    overflow: hidden; /* Ensures the image corners are rounded */
+    overflow: hidden;
+    /* Ensures the image corners are rounded */
 }
 
 .m-course-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1), 0 8px 24px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 8px 24px rgba(0, 0, 0, 0.1);
 }
 
 .m-course-card-image {
@@ -324,6 +325,14 @@ body {
 
 /* --- Media Queries --- */
 @media (max-width: 768px) {
+    .header {
+        position: relative;
+    }
+
+    .page {
+        padding: 0;
+    }
+
     .navbar-links {
         display: none;
         flex-direction: column;
@@ -336,27 +345,34 @@ body {
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
         padding: 1rem 0;
     }
+
     .navbar-links.open {
         display: flex;
     }
+
     .navbar-links a {
         padding: 1rem 1.5rem;
         color: var(--text-dark);
         border-bottom: 1px solid var(--border-color);
     }
+
     .navbar-links a:hover {
         background-color: var(--background-color);
     }
+
     .navbar-links .active {
         border-bottom: 2px solid var(--primary-purple);
     }
+
     .menu-toggle {
         display: block;
     }
+
     .navbar-right .btn {
         display: none;
     }
-    .m-lesson-container{
+
+    .m-lesson-container {
         padding: 4px;
     }
 }
@@ -365,6 +381,7 @@ body {
     .navbar-links {
         display: flex;
     }
+
     .menu-toggle {
         display: none;
     }

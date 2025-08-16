@@ -1,8 +1,28 @@
 {{ define "main" }}
 <div class="container page">
+
+    <!-- NEW: Mobile Toggle Bar -->
+    <div class="mobile-nav-bar">
+        <button class="mobile-nav-toggle" id="menu-toggle-btn" aria-expanded="false" aria-controls="course-lesson-sidebar">
+            <i class="fas fa-bars"></i>
+            <span>Menu</span>
+        </button>
+        <button class="mobile-nav-toggle" id="toc-toggle-btn" aria-expanded="false" aria-controls="mobile-toc-container">
+            <span>On this page</span>
+            <i class="fas fa-chevron-down"></i>
+        </button>
+    </div>
+
+    <!-- NEW: Mobile TOC Dropdown Container -->
+    <div class="mobile-toc-container" id="mobile-toc-container">
+        <div class="m-lesson-toc">
+            {{ .TableOfContents }}
+        </div>
+    </div>
+
     <div class="m-lesson-grid">
-        <!-- Sidebar for All Course Lessons (Desktop Left) -->
-        <aside class="course-lesson-sidebar">
+        <!-- Sidebar for All Course Lessons -->
+        <aside class="course-lesson-sidebar" id="course-lesson-sidebar">
             <nav class="course-lesson-nav">
                 <h4>{{ .Parent.Title }}</h4>
                 <ul>
@@ -24,27 +44,13 @@
                     <i class="fas fa-arrow-left"></i> Back to {{ .Parent.Title }}
                 </a>
             </div>
-
-            <!-- TOC for Mobile (will be hidden on desktop) -->
-            <aside class="m-lesson-sidebar">
-                <div class="toc-dropdown">
-                    <button class="toc-dropdown-toggle" aria-expanded="false" aria-controls="toc-list">
-                        <span>On this page</span>
-                        <i class="fas fa-chevron-down"></i>
-                    </button>
-                    <div class="m-lesson-toc" id="toc-list">
-                        {{ .TableOfContents }}
-                    </div>
-                </div>
-            </aside>
-
             <h1>{{ .Title }}</h1>
             <div class="m-lesson-content">
                 {{ .Content }}
             </div>
         </div>
 
-        <!-- TOC Sidebar for Desktop (will be hidden on mobile) -->
+        <!-- TOC Sidebar for Desktop -->
         <aside class="m-lesson-sidebar-desktop">
              <div class="m-lesson-toc">
                 <h3>On this page</h3>
@@ -53,4 +59,7 @@
         </aside>
     </div>
 </div>
+
+<!-- NEW: Backdrop for mobile sidebars -->
+<div class="mobile-sidebar-backdrop" id="mobile-sidebar-backdrop"></div>
 {{ end }}
