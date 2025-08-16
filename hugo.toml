@@ -1,8 +1,6 @@
 baseURL = "/"
 languageCode = "en-us"
 title = "Exercism"
-theme = ""
-
 
 # Enable JSON output for the search index
 [outputs]
