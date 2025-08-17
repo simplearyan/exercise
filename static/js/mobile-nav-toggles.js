@@ -49,7 +49,7 @@ document.addEventListener('DOMContentLoaded', () => {
             
             if (isExpanded) {
                 closeMenuSidebar(); // Close menu if it's open
-                tocContainer.style.maxHeight = tocContainer.scrollHeight + 'px';
+                // tocContainer.style.maxHeight = tocContainer.scrollHeight + 'px';
                 tocToggleBtn.querySelector('i').style.transform = 'rotate(180deg)';
             } else {
                 tocContainer.style.maxHeight = null;
