@@ -15,6 +15,8 @@
     margin-bottom: 1rem;
     font-weight: 600;
     line-height: 1.3;
+        /* NEW: Adds space above the heading when scrolling to it */
+    scroll-margin-top: 84px; /* Adjust this value to match your sticky nav height */
 }
 
 .m-lesson-content h1 { font-size: 2.25rem; }
